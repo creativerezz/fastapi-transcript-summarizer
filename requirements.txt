@@ -1,0 +1,11 @@
+FastAPI
+uvicorn
+redis
+youtube-transcript-api
+openai
+httpx
+pydantic
+pytest
+aiohttp
+transformers
+prometheus_client

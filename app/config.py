@@ -17,8 +17,9 @@ except ImportError:
     from pydantic import BaseSettings
 
 class Settings(BaseSettings):
-    openai_api_key: str = Field(default="", env="OPENAI_API_KEY")
-    redis_url: AnyUrl | str = Field(default="redis://localhost:6379/0", env="REDIS_URL")
+    # Pydantic V2 syntax - use validation_alias with string for environment variable names
+    openai_api_key: str = Field(default="", validation_alias="OPENAI_API_KEY")
+    redis_url: AnyUrl | str = Field(default="redis://localhost:6379/0", validation_alias="REDIS_URL")
     openai_chunk_model: str = "gpt-4.1-mini"
     openai_reduce_model: str = "gpt-4.1"
     

@@ -8,5 +8,5 @@ pydantic
 pydantic-settings
 pytest
 aiohttp
-transformers
 prometheus_client
+python-dotenv

@@ -12,7 +12,7 @@ class SummarizerService:
 
     async def summarize_transcript(self, transcript: str) -> str:
         key = hashlib.md5(transcript.encode()).hexdigest()
-        cached_summary = self.cache.get_summary(key)
+        cached_summary = await self.cache.get_summary(key)
         if cached_summary:
             return cached_summary
 
@@ -20,7 +20,7 @@ class SummarizerService:
         summaries = await self._summarize_chunks(chunks)
         final_summary = self._combine_summaries(summaries)
 
-        self.cache.set_summary(key, final_summary)
+        await self.cache.set_summary(key, final_summary)
         return final_summary
 
     async def _summarize_chunks(self, chunks: List[str]) -> List[str]:

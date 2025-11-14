@@ -18,15 +18,19 @@ class TranscriptResponse(BaseModel):
 @router.post("/summarize", response_model=TranscriptResponse)
 async def summarize_transcript(request: TranscriptRequest):
     cache_key = request.url_or_id
-    cached_summary = cache_svc.get(cache_key)
+    cached_summary = await cache_svc.get_summary(cache_key)
     
     if cached_summary:
         return TranscriptResponse(summary=cached_summary)
 
     try:
         transcript = await youtube_service.fetch_transcript(request.url_or_id)
+        if not transcript:
+            raise HTTPException(status_code=404, detail="Transcript not found")
         summary = await summarizer_service.summarize_transcript(transcript)
-        cache_svc.set(cache_key, summary)
+        await cache_svc.set_summary(cache_key, summary)
         return TranscriptResponse(summary=summary)
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

@@ -5,6 +5,7 @@ youtube-transcript-api
 openai
 httpx
 pydantic
+pydantic-settings
 pytest
 aiohttp
 transformers

@@ -8,7 +8,7 @@ REQUEST_COUNT = Counter("request_count", "Total number of requests", ["method", 
 
 @router.get("/metrics")
 async def get_metrics():
-    REQUEST_COUNT.inc()  # Increment the counter for each request
+    REQUEST_COUNT.labels(method="GET", endpoint="/metrics").inc()  # Increment the counter for each request
     return generate_latest()  # Return the latest metrics in Prometheus format
 
 # @router.middleware("http")

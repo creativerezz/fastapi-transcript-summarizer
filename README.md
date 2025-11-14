@@ -81,6 +81,57 @@ To run the tests, use the following command:
 pytest
 ```
 
+## Deployment to Railway
+
+This application is configured for deployment on Railway. Follow these steps:
+
+### Prerequisites
+
+1. A Railway account ([railway.app](https://railway.app))
+2. A GitHub repository with your code (or use Railway CLI)
+
+### Deployment Steps
+
+1. **Create a new Railway project:**
+   - Go to [railway.app](https://railway.app) and create a new project
+   - Select "Deploy from GitHub repo" and choose your repository
+   - Or use Railway CLI: `railway init`
+
+2. **Add Redis service (optional but recommended):**
+   - In your Railway project, click "New" → "Database" → "Add Redis"
+   - Railway will automatically set the `REDIS_URL` environment variable
+
+3. **Set environment variables:**
+   - Go to your service → "Variables" tab
+   - Add the following required variables:
+     - `OPENAI_API_KEY`: Your OpenAI API key
+   - Optional variables:
+     - `WEBSHARE_PROXY_USERNAME`: Webshare proxy username (if using proxy)
+     - `WEBSHARE_PROXY_PASSWORD`: Webshare proxy password (if using proxy)
+
+4. **Deploy:**
+   - Railway will automatically detect the `Procfile` and deploy your application
+   - The app will be available at the generated Railway domain
+
+5. **Generate a public domain:**
+   - Go to your service → "Settings" → "Networking"
+   - Click "Generate Domain" to create a public URL
+
+### Environment Variables
+
+The following environment variables can be configured:
+
+- `OPENAI_API_KEY` (required): Your OpenAI API key
+- `REDIS_URL` (optional): Redis connection URL (automatically set if you add Redis service)
+- `WEBSHARE_PROXY_USERNAME` (optional): Webshare proxy username
+- `WEBSHARE_PROXY_PASSWORD` (optional): Webshare proxy password
+
+### Local Development Setup
+
+1. Copy `.env.example` to `.env` (if available)
+2. Set your environment variables in `.env`
+3. Run: `uvicorn app.main:app --reload`
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
